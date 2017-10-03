@@ -2,7 +2,6 @@
 var express = require('express');
 var router = express.Router();
 
-var authorization = require('../middlewares/authorization');
 var protector = require('../middlewares/protector');
 
 //all login endpoints

@@ -7,8 +7,6 @@ var FirebaseAuth = require('firebaseauth');
 var firebase = new FirebaseAuth(config.FIREBASE_API_KEY);
 const protector = require('../../middlewares/protector');
 var User = require('../../models/user');
-// var authorization = require('../../middlewares/authorization');
-// var acl = require('acl');
 
 
 
@@ -35,12 +33,12 @@ function allow(accountType){
 /** ENDPOINT FOR GETTING PROFILE OF ALL STUDENTS */
 
 router.get('/students', protector.protect,function(req,res){
-//    if (req.user.accountType == "student"){
+
     User.find({accountType: "student"},function(err,user){
         if(err){
-            // console.log(err);
+            console.log(err);
 
-            return res.serverError("Something unexpected happened")
+            return res.bad("Something unexpected happened");
         }
 
         if(!user){

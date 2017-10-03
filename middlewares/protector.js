@@ -4,15 +4,15 @@ var FirebaseAuth = require('firebaseauth');
 var firebase = new FirebaseAuth(config.FIREBASE_API_KEY);
 
 var customCallback = function(req, res, next, error, data){
-    if(error === 'ERROR NO TOKEN'){
-        res.badRequest('No token provieded');
+    if(error === 'ERROR_NO_TOKEN'){
+        res.badRequest('No token provided');
     }
-    else if (error === 'ERROR INVALID TOKEN'){
+    else if (error === 'ERROR_INVALID_TOKEN'){
         res.badRequest('Supplied token is invalid');
     }
     else if (error){
         console.log(error);
-        res.serverError('Something unexpected happen')
+        res.serverError('Something unexpected happened')
     }
     else if (data.error){
         res.badRequest('An unexpected error occurred trying to verify your identity.');   
