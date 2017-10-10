@@ -71,6 +71,7 @@ router.get('/all', protector.protect, allow("owner,admin"),function(req,res){
     
 });
 
+
 /** ENDPOINT FOR GETTING LOGGED IN USER */
 router.get('/', protector.protect,function(req,res){
 
@@ -88,17 +89,20 @@ router.get('/', protector.protect,function(req,res){
         res.success(user);
     });
 });
+
+
 /** ENDPOINT FOR GETTING A STUDENT */
 router.get('/student/:id', protector.protect, allow('owner,admin,business,student'), function(req,res){
     
+    var allowedAccountTypes = ["owner", "admin", "business"];
+    var requestAccountTypes = ["student", "business"];
+
+
     User.findById(req.params.id, function(err,userToGet){
         if (err){
 
             return;
         }
-
-        var allowedAccountTypes = ["owner", "admin", "business"];
-        var requestAccountTypes = ["student", "business"];
 
         if (allowedAccountTypes.indexOf(userToGet.accountType) >= 0 &&  requestAccountTypes.indexOf(req.user.accountType) >=0){
             return res.unauthorized("You cannot perform this operation !");
