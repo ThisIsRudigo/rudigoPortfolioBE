@@ -11,7 +11,8 @@ END POINTS FOR THE USER REGISTRATION
 Basic registration 
 
 ***BASE URL: 18.220.175.109***
-ENDPOINT for business
+
+ *ENDPOINT for business*
 1a) "/account/register/business" POST
 
 *	method "POST"
@@ -23,7 +24,7 @@ ENDPOINT for business
           "businessType": "Infotech"
          }
 
-ENDPOINT for owner, admin, student
+ *ENDPOINT for owner, admin, student*
 1b)  "/account/register/admin" POST
 ***ONLY ADMIN AND OWNER ARE ALLOWED TO USE THIS ROUTE***
 **ONLY ADMIN AND OWNER CAN REGISTER STUDENT**
