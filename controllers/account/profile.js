@@ -52,6 +52,114 @@ router.get('/students', protector.protect,function(req,res){
 //        res.badRequest("something terrible happened")
 //    }
 });
+
+router.get('/students/FEW', protector.protect,function(req,res){
+    
+        User.find({stack: "front end web"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
+        });
+    
+    });
+
+    router.get('/students/BEW', protector.protect,function(req,res){
+        
+            User.find({stack: "back end web"},function(err,user){
+                if(err){
+                    console.log(err);
+        
+                    return res.bad("Something unexpected happened");
+                }
+        
+                if(!user){
+                    return res.badRequest("User profile not set up.");
+                }
+        
+                res.success(user);
+            });
+        
+        });
+
+    router.get('/students/android', protector.protect,function(req,res){
+        
+            User.find({stack: "android"},function(err,user){
+                if(err){
+                    console.log(err);
+        
+                    return res.bad("Something unexpected happened");
+                }
+        
+                if(!user){
+                    return res.badRequest("User profile not set up.");
+                }
+        
+                res.success(user);
+            });
+       
+        });
+
+    router.get('/students/UIUX', protector.protect,function(req,res){
+        
+            User.find({stack:"UIUX"},function(err,user){
+                if(err){
+                    console.log(err);
+        
+                    return res.bad("Something unexpected happened");
+                }
+        
+                if(!user){
+                    return res.badRequest("User profile not set up.");
+                }
+        
+                res.success(user);
+            });
+       
+        });
+
+    router.get('/students/local', protector.protect,function(req,res){
+        
+            User.find({studentType: "local"},function(err,user){
+                if(err){
+                    console.log(err);
+        
+                    return res.bad("Something unexpected happened");
+                }
+        
+                if(!user){
+                    return res.badRequest("User profile not set up.");
+                }
+        
+                res.success(user);
+            });
+       
+        });
+
+    router.get('/students/remote', protector.protect,function(req,res){
+        
+            User.find({studentType: "remote"},function(err,user){
+                if(err){
+                    console.log(err);
+        
+                    return res.bad("Something unexpected happened");
+                }
+        
+                if(!user){
+                    return res.badRequest("User profile not set up.");
+                }
+        
+                res.success(user);
+            });
+        
+        });
 /** ENDPOINT FOR GETTING ALL USERS */
 router.get('/all', protector.protect, allow("owner,admin"),function(req,res){
    
@@ -155,10 +263,10 @@ router.put('/update', protector.protect,allow('owner,admin,business'), function(
         stack = req.body.stack,
         week = req.body.week,
         businessType = req.body.businessType,
-        photo = req.body.photo;
+        photo = req.body.photo,
+        rating = req.body.rating;
 
-
-    if (!(name || address || phoneNumber || role || stack || week || businessType || photo)){
+    if (!(name || address || phoneNumber || role || stack || week || businessType || photo || rating)){
         return res.badRequest("please select the fields you want to update");
     }  
     
@@ -191,8 +299,12 @@ router.put('/update', protector.protect,allow('owner,admin,business'), function(
         return res.badRequest('role must be a string.');
     }
 
-     if (businessType && typeof(businessType) !== 'string'){
+    if (businessType && typeof(businessType) !== 'string'){
         return res.badRequest('business type must be a string.');
+    }
+
+    if (rating && typeof(rating) !== 'number'){
+        return res.badRequest('business type must be a number.');
     }
 
     
@@ -214,6 +326,8 @@ router.put('/update', protector.protect,allow('owner,admin,business'), function(
         profile.role = role.trim();
     if (businessType)
         profile.businesssType = businessType.trim();
+    if (rating)
+        profile.rating = rating.trim();
     
     User.findByIdAndUpdate(req.user.id,  {$set: profile}, {$new: true}, function(err, user) {
 
@@ -236,7 +350,8 @@ router.put('/update', protector.protect,allow('owner,admin,business'), function(
             phone:user.phoneNumber,
             stack:user.stack,
             week: user.week,
-            businessType:user.businessType,
+            businessType: user.businessType,
+            rating: user.rating,
      };
 
         if (name){
@@ -276,10 +391,11 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
             stack = req.body.stack,
             week = req.body.week,
             businessType = req.body.businessType,
-            photo = req.body.photo;
+            photo = req.body.photo,
+            rating = req.body.rating,
 
 
-    if (!(name || address || phoneNumber || role || stack || week || businessType || photo)){
+    if (!(name || address || phoneNumber || role || stack || week || businessType || photo || rating)){
         return res.badRequest("please select the fields you want to update");
     }  
     
@@ -311,8 +427,12 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
         return res.badRequest('role must be a string.');
     }
 
-     if (businessType && typeof(businessType) !== 'string'){
+    if (businessType && typeof(businessType) !== 'string'){
         return res.badRequest('business type must be a string.');
+    }
+
+    if (rating && typeof(rating) !== 'number'){
+        return res.badRequest('business type must be a number.');
     }
 
     
@@ -334,6 +454,8 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
         profile.role = role.trim();
     if (businessType)
         profile.businesssType = businessType.trim();
+    if (rating)
+        profile.rating = rating.trim();
     
         
     User.findByIdAndUpdate(req.params.id,  {$set: profile}, {$new: true}, function(err, user) {
@@ -358,7 +480,7 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
             stack:user.stack,
             week: user.week,
             businessType:user.businessType,
-            // status: user.status
+            rating: user.rating,
         };
 
             if (name){

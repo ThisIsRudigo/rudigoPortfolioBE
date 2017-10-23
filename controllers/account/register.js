@@ -18,6 +18,7 @@ router.post('/admin', function(req,res){
        var password = req.body.password;
        var name = req.body.name;
        var accountType = req.body.accountType;
+       var studentType = req.body.studentType;
     
 
     if (typeof(email) !== 'string'){
@@ -30,11 +31,33 @@ router.post('/admin', function(req,res){
      if (typeof(name) !== 'string' || name.trim().length < 2){
         return res.badRequest('Name is required');
     }
+    if (typeof(accountType) !== 'string'){
+        return res.badRequest('Account type is required');
+    }
+   
 
     var allowedAccountTypes = ["student", "admin", "owner"];
     if (accountType && allowedAccountTypes.indexOf(accountType.toLowerCase()) < 0){
         return res.badRequest("Account type is required");
     }
+
+    var allowedStudentTypes = ["local", "remote"];
+    
+
+    if (accountType == "student" && typeof(studentType) !== 'string'){
+
+            return res.badRequest('Student type is required');
+    
+        if (studentType !== allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
+            return res.badRequest('Please select from the given options for student type !');
+        }
+      }
+    // if (studentType && allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
+
+    //         return res.badRequest("Student type is required");
+    //     }
+    
+   
 
    
     var extras = {
@@ -52,7 +75,8 @@ router.post('/admin', function(req,res){
             _id: response.user.id,
             name: response.user.displayName,
             email: response.user.email,
-            accountType: accountType
+            accountType: accountType,
+            studentType: studentType,
         };
 
         User.create(info, function(err){

@@ -17,19 +17,26 @@ var fields = {
     },
     phoneNumber: String,
     photo: String,
-    businessType: String,
-    role: String,
-   
     address: String,
-    businessType: String,
-    stack: String,
-    week: String,
     accountType:{
         type: String,
         enum: ["owner","admin","business","student"],
         required: true,
         default: "business"
-    }
+    },
+    role: String,
+    businessType: String,
+    studentType:  {
+        type: String,
+        enum: ["local","remote"],   
+    },
+    stack: {
+        type: String,
+        enum:["front end web","back end web","android","UIUX"],
+    },
+    week: String,
+    rating: Number,
+   
 };
 
 var User = new Schema(fields, { timestamps: true});
