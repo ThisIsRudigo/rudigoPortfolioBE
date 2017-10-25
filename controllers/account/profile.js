@@ -392,7 +392,7 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
             week = req.body.week,
             businessType = req.body.businessType,
             photo = req.body.photo,
-            rating = req.body.rating,
+            rating = req.body.rating;
 
 
     if (!(name || address || phoneNumber || role || stack || week || businessType || photo || rating)){
@@ -449,13 +449,13 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
     if (phoneNumber)
         profile.phoneNumber = phoneNumber.trim();
     if (week)
-        profile.week = week.trim();
+        profile.week = week;
     if (role)
         profile.role = role.trim();
     if (businessType)
         profile.businesssType = businessType.trim();
     if (rating)
-        profile.rating = rating.trim();
+        profile.rating = rating;
     
         
     User.findByIdAndUpdate(req.params.id,  {$set: profile}, {$new: true}, function(err, user) {
