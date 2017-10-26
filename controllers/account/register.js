@@ -19,6 +19,7 @@ router.post('/admin', function(req,res){
        var name = req.body.name;
        var accountType = req.body.accountType;
        var studentType = req.body.studentType;
+       var stack = req.body.stack;
     
 
     if (typeof(email) !== 'string'){
@@ -34,6 +35,7 @@ router.post('/admin', function(req,res){
     if (typeof(accountType) !== 'string'){
         return res.badRequest('Account type is required');
     }
+    
    
 
     var allowedAccountTypes = ["student", "admin", "owner"];
@@ -42,7 +44,7 @@ router.post('/admin', function(req,res){
     }
 
     var allowedStudentTypes = ["local", "remote"];
-    
+    var allowedStackTypes = ["front end web","back end web","android","UIUX"];
 
     if (accountType == "student" && typeof(studentType) !== 'string'){
 
@@ -52,6 +54,13 @@ router.post('/admin', function(req,res){
             return res.badRequest('Please select from the given options for student type !');
         }
       }
+    if (accountType == "student" && typeof(stack) !== 'string'){
+             return res.badRequest('Student Stack is required');
+
+        if (stack !== allowedStackTypes.indexOf(stack.toLowerCase()) < 0){
+            return res.badRequest('Please select from the given options for student stack !');
+        }
+    }
     // if (studentType && allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
 
     //         return res.badRequest("Student type is required");
@@ -77,6 +86,7 @@ router.post('/admin', function(req,res){
             email: response.user.email,
             accountType: accountType,
             studentType: studentType,
+            stack: stack,
         };
 
         User.create(info, function(err){

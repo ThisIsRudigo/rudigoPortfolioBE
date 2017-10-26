@@ -17,12 +17,12 @@ Basic registration
 
 ```js
 	method "POST"
-	request parameters "(json)
+	request parameters (json)
         {
-         "password" : "******" (6 and above string),
-         "name": "east of the sunrise IT Resources"(string),
-          "email": "test@test.com"(string),
-          "businessType": "Infotech"
+         "password" : ******  // (6 and above string),
+         "name": "east of the sunrise IT Resources" // (string),
+          "email": "test@test.com" // (string),
+          "businessType": "Infotech" // (string)
          }
 ```
 
@@ -33,11 +33,11 @@ Basic registration
 
 ```js
 	method "POST"
-	request parameters "(json)
+	request parameters (json)
         {
-         "password" : "******" (6 and above string),
-         "name": "ebube kalu"(string),
-          "email": "test@test.com"(string),
+         "password" : ******  // (6 and above string),
+         "name": "ebube kalu"  // (string),
+          "email": "test@test.com" // (string),
           "accountType": "admin"
          }
 
@@ -54,13 +54,14 @@ Basic registration
   ## For Student Registration
   ```js
 	method "POST"
-	request parameters "(json)
+	request parameters (json)
         {
-         "password" : "******" (6 and above string),
-         "name": "ebube kalu"(string),
-          "email": "test@test.com"(string),
-          "accountType": "student",
+         "password" : ******  // (6 and above string),
+         "name": "ebube kalu" //  (string),
+          "email": "test@test.com"  //(string),
+          "accountType": "student"
           "studentType":"local"
+          "stack":"android"
          }
 
  * response on success (json)
@@ -68,8 +69,7 @@ Basic registration
 		name : ebube kalu,
                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI6 *** DlsdkaiwADWRWRfqwdnj"
                 refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6 ~~~~ DlsdkaiwADWRWRfqwdnj"
-                accountType: "student",
-                studentType: "local"
+                
 				}
 
 ```
@@ -80,7 +80,7 @@ Basic registration
 	method "POST"
 	request parameters "(json)"
 		{
-		 "password":"******"(string),
+		 "password":"******" (string),
 		 "email":"test@test.com"
 		 }
 
