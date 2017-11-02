@@ -6,13 +6,15 @@ var config = require('../../config');
 var FirebaseAuth = require('firebaseauth');
 var firebase = new FirebaseAuth(config.FIREBASE_API_KEY);
 
-/** ENDPOINT FOR REQUESTING PASSWORD CHANGE USING EMAIL */
-router.post('/password', function(req,res){
+const validator = require('../../utils/validator');
+
+/*** END POINT FOR REQUESTING PASSWORD CHANGE USING EMAIL */
+router.post('/password', function(req, res){
     var email = req.body.email;
 
-    if (typeof(email) !== 'string'){
-        return res.badRequest('Email is missing or invalid');
-    }
+    var validatedEmail = validator.isValidEmail(res, email);
+    if (!validatedEmail)
+    	return;
 
     firebase.sendPasswordResetEmail(email, function(err){
         if(err){

@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -20,7 +19,7 @@ var fields = {
     address: String,
     accountType:{
         type: String,
-        enum: ["owner","admin","business","student"],
+        enum: ["owner", "admin", "business", "student"],
         required: true,
         default: "business"
     },
@@ -28,11 +27,11 @@ var fields = {
     businessType: String,
     studentType:  {
         type: String,
-        enum: ["local","remote"],   
+        enum: ["local","remote"]
     },
     stack: {
         type: String,
-        enum:["front end web","back end web","android","UIUX"],
+        enum:["front end web", "back end web", "android", "ui/ux"]
     },
     week: String,
     rating: Number,
