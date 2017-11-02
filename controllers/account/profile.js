@@ -109,7 +109,7 @@ router.get('/students/FEW', protector.protect,function(req,res){
 
     router.get('/students/UIUX', protector.protect,function(req,res){
         
-            User.find({stack:"UIUX"},function(err,user){
+            User.find({stack:"ui/ux"},function(err,user){
                 if(err){
                     console.log(err);
         
@@ -160,6 +160,8 @@ router.get('/students/FEW', protector.protect,function(req,res){
             });
         
         });
+
+    
 /** ENDPOINT FOR GETTING ALL USERS */
 router.get('/all', protector.protect, allow("owner,admin"),function(req,res){
    
