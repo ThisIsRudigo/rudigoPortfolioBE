@@ -5,11 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var acl = require('acl');
-
+// var acl = require('acl');
+var swaggerJSDoc = require('swagger-jsdoc');
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+// var swagger = require('./routes/swagger');
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -22,6 +22,49 @@ app.use(express.static(path.join(__dirname, 'public')));
 //setup cors to accept requests from everywhere
 var cors = require('cors');
 app.use(cors());
+
+var spec = swaggerJSDoc({
+  swaggerDefinition: {
+    info: {
+      title: 'Rudigo Portfolio',
+      version: '1.0.0'
+    },
+    host: '18.220.175.109',
+    basePath: '/',
+  
+    produces: ['application/json'],
+    consumes: ['application/json'],
+  //   securityDefinitions: {
+  //     jwt: {
+  //       type: 'apiKey',
+  //       name: 'Authorization',
+  //       in: 'header'
+  //     }
+  //   },
+  //   security: [
+  //     { jwt: []}
+  //   ]
+  },
+  
+ 
+  // path to the API docs
+  apis: [
+    './controllers/account/*.js'
+  ]
+  
+});
+// var options = {
+//   // import swaggerDefinitions
+//   swaggerDefinition:swaggerDefinition,}
+
+// //  initialize swagger-jsdoc
+// var swaggerspec = swaggerJSDoc();
+
+// serve swagger
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(spec);
+});
 
 var config  = require('./config');
 
@@ -49,6 +92,7 @@ app.set('view engine', 'jade');
 
 app.use('/', index);
 app.use('/users', users);
+// app.use('/swagger',swagger);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -69,7 +69,7 @@ Basic registration
 		name : ebube kalu,
                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI6 *** DlsdkaiwADWRWRfqwdnj"
                 refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6 ~~~~ DlsdkaiwADWRWRfqwdnj"
-                
+                e
 				}
 
 ```

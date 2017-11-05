@@ -32,6 +32,48 @@ function allow(accountType){
 
 /** ENDPOINT FOR GETTING PROFILE OF ALL STUDENTS */
 
+/**
+* @swagger
+* definition:
+*       Users:
+*         properties:
+*           name:
+*             type: string
+*             title: "Name"
+*           password:
+*             type: string
+*             title: "Password"
+*           email:
+*             type: string
+*             title: "Email"
+*           businessType:
+*             type: string
+*             title: "Business Type"
+*           accountType: 
+*             type: string
+*             title: "Account Type"
+*           studentType:
+*             type: string
+*             title: "Student Type"
+*           stack:
+*               type: string
+*               title: "stack"
+*/            
+/**
+ * @swagger
+ * /account/profile/students:
+ *   get:
+ *     summary: "This endpoint returns the entire students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
 router.get('/students', protector.protect,function(req,res){
 
     User.find({accountType: "student"},function(err,user){
@@ -200,6 +242,29 @@ router.get('/', protector.protect,function(req,res){
 
 
 /** ENDPOINT FOR GETTING A STUDENT */
+
+/**
+ * @swagger
+ * /profile/students/{id}:
+ *   get:
+ *     tags:
+ *       - Students
+ *     summary: Returns a single student
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Student's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A single student
+ *         schema:
+ *           $ref: '#/definitions/Users'
+ */
+
 router.get('/student/:id', protector.protect, allow('owner,admin,business,student'), function(req,res){
     
     var allowedAccountTypes = ["owner", "admin", "business"];
@@ -254,6 +319,62 @@ router.get('/:id', protector.protect, allow("owner,admin"), function(req,res){
 });
 
 /** ENDPOINT FOR UPDATING PROFILE OF CURRENTLY LOGGED IN USER */
+/**
+ * @swagger
+ * /users:
+ *   put:
+ *     summary: Updates a  new user
+ *     description:
+ *       Updates a user profile
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         required: true
+ *         schema:
+ *         type: object
+ *           - name
+ *           - phoneNumber
+ *           - address
+ *           - role
+ *         properties:
+ *           name:
+ *             type: string
+ *           phoneNumber:
+ *             type: string
+ *           role:
+ *             type: string
+ *           address:
+ *             type: string
+ *           example: {
+ *             "name": "Kalu Dike",
+ *             "phoneNumber": "+2345878560",
+ *             "address": "no 23 ojike lane, amanato",
+ *             "role":"CTO"
+ *            }
+ *     responses:
+ *       200:
+ *         schema:
+ *           type: object
+ *           properties:
+ *              id:
+ *               type: string
+ *              name:
+ *               type: string
+ *              phoneNumber: 
+ *               type: string
+ *         examples:
+ *             application/json: {
+ *                 "id":1erf535ggt,
+ *                 "name": "Kalu Dike",
+ *                 "phoneNumber": "+23457974004",
+ *                 "role":"CTO",
+ *                 "address":"no 23 ojike lane, amanato"
+ *               }
+ *       404:
+ *         description: User profile not found
+ */
 router.put('/update', protector.protect,allow('owner,admin,business'), function(req,res){
 
     var name = req.body.name,

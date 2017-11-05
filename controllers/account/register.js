@@ -12,6 +12,97 @@ var User = require('../../models/user');
 
 
 /** ENDPOINT FOR REGISTRATION */
+
+/**
+ * @swagger
+ * definition:
+ *       Admin:
+ *         properties:
+ *           name:
+ *             type: string
+ *             title: "Name"
+ *           password:
+ *             type: string
+ *             title: "Password"
+ *           email:
+ *             type: string
+ *             title: "Email"
+ *           accountType:
+ *             type: string
+ *             title: "Account Type"
+ *             enum:
+ *             - "admin"
+ *             - "student"
+ *           studentType:
+ *             type: string
+ *             title: "Student Type"
+ *             enum:
+ *             - "local"
+ *             - "remote"
+ *           stack: 
+ *             type: string
+ *             title: "Student's Stack"
+ *             enum:
+ *             - "front end web"
+ *             - "back end web"
+ *             - "android"
+ *             - "uiux"
+ *          
+ *           example: {
+ *             name: TrippleSoft ICT,
+ *             password: qwertyuio12345@rt,
+ *             email": TrippleSoftICT@gmail.com,
+ *             accountType: student,
+ *             studentType: local,
+ *             stack: back end web
+ *            }
+ */
+
+/**
+ * @swagger
+ * /register/admin:
+ *   post:
+ *     summary: Registers a new admin or student
+ *     description:
+ *       "This endpoint registers a new admin or student to Rudigo Portfolio"
+ *     tags:
+ *       - Register
+ *     parameters:
+ *       - name: user
+ *         in: body
+ *         required: true
+ *         type: string
+ *         schema: 
+ *           $ref: "#/definitions/Admin"
+ *         model: {
+ *            "name": "TrippleSoft ICT",
+ *            "password": "qwertyuio12345@rt",
+ *            "email": "TrippleSoftICT@gmail.com",
+ *            "accountType":"admin"
+ *            }
+ *     responses:
+ *      
+ *       409:
+ *         description: When the email is already in use
+ *     securityDefinitions:
+ *       jwtToken:
+ *         description: "A JWT short-lived token containing key information about the user.\
+ *           \ It is created every time a user is authenticated and lasts 10 minutes. Its\
+ *           \ renewed automatically each time a non-public endpoint is called with a valid\
+ *           \ Refresh-Token header."
+ *         type: "apiKey"
+ *         name: "Authorization"
+ *         in: "header"
+ *       refreshToken:
+ *         description: "A long-lived token containing information account user session.\
+ *           \ It is generated every time a user is authenticated, and lasts 30 days. Also,\
+ *           \ if user changes its role or password, of if there is any suspect of replay\
+ *           \ attack, all tokens are revoked"
+ *         type: "apiKey"
+ *         name: "Refresh-Token"
+ *         in: "header"
+ *     
+ */
 router.post('/admin', function(req,res){
  
        var email = req.body.email;
@@ -22,7 +113,7 @@ router.post('/admin', function(req,res){
        var stack = req.body.stack;
     
 
-    if (typeof(email) !== 'string'){
+    if (typeof(email) !== 'string' ){
         return res.badRequest('Email is required');
     }
    
@@ -44,22 +135,27 @@ router.post('/admin', function(req,res){
     }
 
     var allowedStudentTypes = ["local", "remote"];
-    var allowedStackTypes = ["front end web","back end web","android","UIUX"];
+    var allowedStackTypes = ["front end web", "back end web", "android", "uiux"];
 
     if (accountType == "student" && typeof(studentType) !== 'string'){
 
             return res.badRequest('Student type is required');
+
+        }
     
         if (studentType !== allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
             return res.badRequest('Please select from the given options for student type !');
-        }
+        
       }
     if (accountType == "student" && typeof(stack) !== 'string'){
+
              return res.badRequest('Student Stack is required');
+
+            }
 
         if (stack !== allowedStackTypes.indexOf(stack.toLowerCase()) < 0){
             return res.badRequest('Please select from the given options for student stack !');
-        }
+        
     }
     // if (studentType && allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
 
@@ -95,8 +191,8 @@ router.post('/admin', function(req,res){
                 return res.badRequest("Something unexpected happened");
             }
             var info = {
-                name: response.user.displayName,
-                accountType:response.user.accountType,
+                name: user.name,
+                accountType: user.accountType,
                 token: response.token,
                 refreshToken: response.refreshToken,
                 expiryMilliseconds:response.expiryMilliseconds
@@ -106,6 +202,76 @@ router.post('/admin', function(req,res){
     });
 });
 
+/**
+ * @swagger
+ * definition:
+ *       NewBusiness:
+ *         properties:
+ *           name:
+ *             type: string
+ *             title: "Name"
+ *           password:
+ *             type: string
+ *             title: "Password"
+ *           email:
+ *             type: string
+ *             title: "Email"
+ *           businessType:
+ *             type: string
+ *             title: "Business Type"
+ *           example: {
+ *             "name": "TrippleSoft ICT",
+ *             "password": "qwertyuio12345@rt",
+ *             "email": "TrippleSoftICT@gmail.com",
+ *             "businessType":"Tech"
+ *            }
+ */
+
+/**
+ * @swagger
+ * /register/business:
+ *   post:
+ *     summary: Registers a new business
+ *     description:
+ *       "This endpoint registers a new business to Rudigo Portfolio"
+ *     tags:
+ *       - Register
+ *     parameters:
+ *       - name: user
+ *         in: body
+ *         required: true
+ *         type: string
+ *         schema: 
+ *           $ref: "#/definitions/NewBusiness"
+ *         model: {
+ *            "name": "TrippleSoft ICT",
+ *            "password": "qwertyuio12345@rt",
+ *            "email": "TrippleSoftICT@gmail.com",
+ *            "businessType":"Tech"
+ *            }
+ *     responses:
+ *      
+ *       409:
+ *         description: When the email is already in use
+ *     securityDefinitions:
+ *       jwtToken:
+ *         description: "A JWT short-lived token containing key information about the user.\
+ *           \ It is created every time a user is authenticated and lasts 10 minutes. Its\
+ *           \ renewed automatically each time a non-public endpoint is called with a valid\
+ *           \ Refresh-Token header."
+ *         type: "apiKey"
+ *         name: "Authorization"
+ *         in: "header"
+ *       refreshToken:
+ *         description: "A long-lived token containing information account user session.\
+ *           \ It is generated every time a user is authenticated, and lasts 30 days. Also,\
+ *           \ if user changes its role or password, of if there is any suspect of replay\
+ *           \ attack, all tokens are revoked"
+ *         type: "apiKey"
+ *         name: "Refresh-Token"
+ *         in: "header"
+ *     
+ */
 router.post('/business', function(req, res){
     var email = req.body.email,
         password = req.body.password,
@@ -136,6 +302,15 @@ router.post('/business', function(req, res){
             return res.badRequest(err.message);
         }
 
+        // if(!user){
+        //     return res.success ({
+        //         newUser: true,
+        //         name: response.user.displayName,
+        //         photo: response.user.photoUrl,
+        //         token: response.token
+        //     })
+        // }
+
         var info = {
             _id: response.user.id,
             name: response.user.displayName,
@@ -160,6 +335,8 @@ router.post('/business', function(req, res){
         });
     });
 });
+
+
 
 
 

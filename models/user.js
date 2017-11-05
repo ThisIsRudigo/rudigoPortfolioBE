@@ -32,7 +32,7 @@ var fields = {
     },
     stack: {
         type: String,
-        enum:["front end web","back end web","android","UIUX"],
+        enum:["front end web","back end web","android","uiux"],
     },
     week: String,
     rating: Number,
