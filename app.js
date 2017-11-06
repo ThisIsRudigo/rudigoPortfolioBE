@@ -29,21 +29,22 @@ var spec = swaggerJSDoc({
       title: 'Rudigo Portfolio',
       version: '1.0.0'
     },
-    host: '18.220.175.109',
+    // host: '18.220.175.109',
+    host: 'localhost:3000',
     basePath: '/',
   
     produces: ['application/json'],
     consumes: ['application/json'],
-  //   securityDefinitions: {
-  //     jwt: {
-  //       type: 'apiKey',
-  //       name: 'Authorization',
-  //       in: 'header'
-  //     }
-  //   },
-  //   security: [
-  //     { jwt: []}
-  //   ]
+    // securityDefinition: {
+    //   ApiKeyAuth: {
+    //     type: 'apiKey',
+    //     name: 'x-access-token',
+    //     in: 'header'
+    //   }
+    // },
+    // security: [
+    //   { ApiKeyAuth: []}
+    // ]
   },
   
  

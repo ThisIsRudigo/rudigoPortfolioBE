@@ -70,6 +70,19 @@
 <script src="./swagger-ui-bundle.js"> </script>
 <script src="./swagger-ui-standalone-preset.js"> </script>
 <script>
+
+// function addApiKeyAuthorization(){
+//         var key = encodeURIComponent( $('#input_apiKey')[0].value );
+//         if(key && key.trim() != "") {
+//             var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization( "Authorization", "Bearer " + key, "header" );
+//             window.swaggerUi.api.clientAuthorizations.add( "jsonwebToken", apiKeyAuth );
+//             log( "Set bearer token: " + key );
+//         }
+//       }
+
+//        $('#input_apiKey').change(addApiKeyAuthorization);
+
+
 window.onload = function() {
   
   // Build a system

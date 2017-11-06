@@ -58,7 +58,20 @@ function allow(accountType){
 *           stack:
 *               type: string
 *               title: "stack"
-*/            
+*/ 
+/**
+ * @swagger
+ * securityDefinition:
+ *        
+ *      apiKeyAuth: 
+ *        type:  apiKey
+ *        name: 'x-access-token'
+ *        in: 'header'
+ *      
+ *      
+ * 
+ * 
+ */           
 /**
  * @swagger
  * /account/profile/students:
@@ -68,6 +81,10 @@ function allow(accountType){
  *      - Students
  *     produces:
  *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *      
+ *       
  *     responses:
  *       200:
  *         description: "An array of users."
@@ -95,6 +112,25 @@ router.get('/students', protector.protect,function(req,res){
 //    }
 });
 
+/**
+ * @swagger
+ * /account/profile/students/FEW:
+ *   get:
+ *     summary: "This endpoint returns the front end web students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *       
+ *       
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
 router.get('/students/FEW', protector.protect,function(req,res){
     
         User.find({stack: "front end web"},function(err,user){
@@ -113,96 +149,199 @@ router.get('/students/FEW', protector.protect,function(req,res){
     
     });
 
-    router.get('/students/BEW', protector.protect,function(req,res){
-        
-            User.find({stack: "back end web"},function(err,user){
-                if(err){
-                    console.log(err);
-        
-                    return res.bad("Something unexpected happened");
-                }
-        
-                if(!user){
-                    return res.badRequest("User profile not set up.");
-                }
-        
-                res.success(user);
-            });
-        
+/**
+ * @swagger
+ * /account/profile/students/BEW:
+ *   get:
+ *     summary: "This endpoint returns back end web students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security:
+ *          - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
+router.get('/students/BEW', protector.protect,function(req,res){
+    
+        User.find({stack: "back end web"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
         });
+    
+    });
 
-    router.get('/students/android', protector.protect,function(req,res){
-        
-            User.find({stack: "android"},function(err,user){
-                if(err){
-                    console.log(err);
-        
-                    return res.bad("Something unexpected happened");
-                }
-        
-                if(!user){
-                    return res.badRequest("User profile not set up.");
-                }
-        
-                res.success(user);
-            });
-       
+/**
+ * @swagger
+ * /account/profile/students/android:
+ *   get:
+ *     summary: "This endpoint returns the android students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security:
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
+router.get('/students/android', protector.protect,function(req,res){
+    
+        User.find({stack: "android"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
         });
+    
+    });
 
-    router.get('/students/UIUX', protector.protect,function(req,res){
-        
-            User.find({stack:"UIUX"},function(err,user){
-                if(err){
-                    console.log(err);
-        
-                    return res.bad("Something unexpected happened");
-                }
-        
-                if(!user){
-                    return res.badRequest("User profile not set up.");
-                }
-        
-                res.success(user);
-            });
-       
+/**
+ * @swagger
+ * /account/profile/students/UIUX:
+ *   get:
+ *     summary: "This endpoint returns the UI/UX students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
+router.get('/students/UIUX', protector.protect,function(req,res){
+    
+        User.find({stack:"UIUX"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
         });
+    
+    });
 
-    router.get('/students/local', protector.protect,function(req,res){
-        
-            User.find({studentType: "local"},function(err,user){
-                if(err){
-                    console.log(err);
-        
-                    return res.bad("Something unexpected happened");
-                }
-        
-                if(!user){
-                    return res.badRequest("User profile not set up.");
-                }
-        
-                res.success(user);
-            });
-       
+/**
+ * @swagger
+ * /account/profile/students/local:
+ *   get:
+ *     summary: "This endpoint returns the local students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
+router.get('/students/local', protector.protect,function(req,res){
+    
+        User.find({studentType: "local"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
         });
+    
+    });
 
-    router.get('/students/remote', protector.protect,function(req,res){
-        
-            User.find({studentType: "remote"},function(err,user){
-                if(err){
-                    console.log(err);
-        
-                    return res.bad("Something unexpected happened");
-                }
-        
-                if(!user){
-                    return res.badRequest("User profile not set up.");
-                }
-        
-                res.success(user);
-            });
-        
+/**
+ * @swagger
+ * /account/profile/students/remote:
+ *   get:
+ *     summary: "This endpoint returns the remote students"
+ *     tags:
+ *      - Students
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */    
+router.get('/students/remote', protector.protect,function(req,res){
+    
+        User.find({studentType: "remote"},function(err,user){
+            if(err){
+                console.log(err);
+    
+                return res.bad("Something unexpected happened");
+            }
+    
+            if(!user){
+                return res.badRequest("User profile not set up.");
+            }
+    
+            res.success(user);
         });
+    
+    });
 /** ENDPOINT FOR GETTING ALL USERS */
+
+/**
+ * @swagger
+ * /account/profile/all:
+ *   get:
+ *     summary: "This endpoint returns the entire profile in the database"
+ *     tags:
+ *      - Users
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "An array of users."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
 router.get('/all', protector.protect, allow("owner,admin"),function(req,res){
    
     User.find({},function(err,user){
@@ -223,6 +362,24 @@ router.get('/all', protector.protect, allow("owner,admin"),function(req,res){
 
 
 /** ENDPOINT FOR GETTING LOGGED IN USER */
+
+/**
+ * @swagger
+ * /account/profile:
+ *   get:
+ *     summary: "This endpoint returns the logged in user"
+ *     tags:
+ *      - Users
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: "Logged in user."
+ *         schema:
+ *           $ref: "#/definitions/Users"
+ */
 router.get('/', protector.protect,function(req,res){
 
     User.findById(req.user.id, function(err,user){
@@ -252,6 +409,8 @@ router.get('/', protector.protect,function(req,res){
  *     summary: Returns a single student
  *     produces:
  *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
  *     parameters:
  *       - name: id
  *         description: Student's id
@@ -301,6 +460,30 @@ router.get('/student/:id', protector.protect, allow('owner,admin,business,studen
 
 /** ENDPOINT FOR GETTING A USER */
 
+/**
+ * @swagger
+ * /profile/{id}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Returns a specific user
+ *     produces:
+ *       - application/json
+ *     security: 
+ *       - apiKeyAuth: []
+ *     parameters:
+ *       - name: id
+ *         description: User's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A single user
+ *         schema:
+ *           $ref: '#/definitions/Users'
+ */
+
 router.get('/:id', protector.protect, allow("owner,admin"), function(req,res){
 
     User.findById(req.params.id, function(err,user){
@@ -321,60 +504,24 @@ router.get('/:id', protector.protect, allow("owner,admin"), function(req,res){
 /** ENDPOINT FOR UPDATING PROFILE OF CURRENTLY LOGGED IN USER */
 /**
  * @swagger
- * /users:
+ * /account/update:
  *   put:
- *     summary: Updates a  new user
- *     description:
- *       Updates a user profile
- *     tags:
- *       - Users
+ *     tags: Users
+ *     description: Updates the logged in user
+ *     produces: application/json
  *     parameters:
- *       - name: body
- *         in: body
- *         required: true
- *         schema:
- *         type: object
- *           - name
- *           - phoneNumber
- *           - address
- *           - role
- *         properties:
- *           name:
- *             type: string
- *           phoneNumber:
- *             type: string
- *           role:
- *             type: string
- *           address:
- *             type: string
- *           example: {
- *             "name": "Kalu Dike",
- *             "phoneNumber": "+2345878560",
- *             "address": "no 23 ojike lane, amanato",
- *             "role":"CTO"
- *            }
+ *       name: user
+ *       in: body
+ *       description: Fields for the User resource
+ *       schema:
+ *         type: array
+ *         $ref: '#/definitions/Users'
  *     responses:
  *       200:
- *         schema:
- *           type: object
- *           properties:
- *              id:
- *               type: string
- *              name:
- *               type: string
- *              phoneNumber: 
- *               type: string
- *         examples:
- *             application/json: {
- *                 "id":1erf535ggt,
- *                 "name": "Kalu Dike",
- *                 "phoneNumber": "+23457974004",
- *                 "role":"CTO",
- *                 "address":"no 23 ojike lane, amanato"
- *               }
- *       404:
- *         description: User profile not found
+ *         description: Successfully updated
  */
+
+
 router.put('/update', protector.protect,allow('owner,admin,business'), function(req,res){
 
     var name = req.body.name,
@@ -492,6 +639,27 @@ router.put('/update', protector.protect,allow('owner,admin,business'), function(
         }
     })
 });
+
+/** ENDPOINT FOR UPDATING PROFILE OF A SINGLE USER */
+/**
+ * @swagger
+ * /account/update/{id}:
+ *   put:
+ *     tags: Users
+ *     description: Updates a single user
+ *     produces: application/json
+ *     parameters:
+ *       name: user
+ *       in: body
+ *       description: Fields for the User resource
+ *       schema:
+ *         type: array
+ *         $ref: '#/definitions/Users'
+ *     responses:
+ *       200:
+ *         description: Successfully updated
+ */
+
 
 router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,res){
     User.findById(req.params.id, function(err,userToUpdate){
@@ -623,7 +791,28 @@ router.put('/update/:id', protector.protect,allow('owner,admin'), function(req,r
     });
 });
 
+/* DELETES A SPECIFIC USER FROM THE DATABASE */
 
+
+/**
+ * @swagger
+ * /account/{id}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     description: Deletes a single user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: User's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successfully deleted
+ */
 
 router.delete('/:id',protector.protect, allow('owner,admin'),function(req,res){
   

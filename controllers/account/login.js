@@ -27,10 +27,23 @@ var User = require('../../models/user');
  *          type: "string"
  *          description: "The User plain text password."
  *          title: "Password"
+ *     UserJWT:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: A short-lived token containing...
+ *           title: Token
+ *         refresh_token: 
+ *           type: string
+ *           description: A long-lived token containing ...
+ *           title: Refresh Token
+ *         user: 
+ *           $ref: "#/definitions/UserLogin"
  */
 /**
  * @swagger
- * /login:
+ * /account/login:
  *    post:
  *     summary: "Logs the user in"
  *     description: "Logs the user in by receving an object with user email and password\
@@ -44,6 +57,17 @@ var User = require('../../models/user');
  *       schema:
  *         $ref: "#/definitions/UserLogin"
  *     responses:
+ *       201:
+ *         description: The JWT token representing user session
+ *         schema: 
+ *           $ref: "#/definitions/UserJWT"
+ *         headers:
+ *           Authorization: 
+ *             type: string
+ *             description: A JWT short-lived token...
+ *           Refresh-Token: 
+ *             type: string
+ *             description: A long-lived token ...
  *       400:
  *         description: "There was an error parsing the request data"
  *       404:

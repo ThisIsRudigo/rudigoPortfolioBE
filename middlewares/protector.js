@@ -4,6 +4,7 @@ var FirebaseAuth = require('firebaseauth');
 var firebase = new FirebaseAuth(config.FIREBASE_API_KEY);
 
 var customCallback = function(req, res, next, error, data){
+    console.log(req.query);
     if(error === 'ERROR_NO_TOKEN'){
         res.badRequest('No token provided');
     }

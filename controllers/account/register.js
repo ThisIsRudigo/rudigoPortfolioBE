@@ -60,7 +60,7 @@ var User = require('../../models/user');
 
 /**
  * @swagger
- * /register/admin:
+ * account/register/admin:
  *   post:
  *     summary: Registers a new admin or student
  *     description:
@@ -141,22 +141,23 @@ router.post('/admin', function(req,res){
 
             return res.badRequest('Student type is required');
 
-        }
-    
-        if (studentType !== allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
-            return res.badRequest('Please select from the given options for student type !');
-        
+            if (studentType !== allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
+                return res.badRequest('Please select from the given options for student type !');
+
+        }  
       }
     if (accountType == "student" && typeof(stack) !== 'string'){
 
              return res.badRequest('Student Stack is required');
 
-            }
+            if (stack !== allowedStackTypes.indexOf(stack.toLowerCase()) < 0){
+                return res.badRequest('Please select from the given options for student stack !');
+            
+        }
 
-        if (stack !== allowedStackTypes.indexOf(stack.toLowerCase()) < 0){
-            return res.badRequest('Please select from the given options for student stack !');
-        
-    }
+     }
+
+      
     // if (studentType && allowedStudentTypes.indexOf(studentType.toLowerCase()) < 0){
 
     //         return res.badRequest("Student type is required");
@@ -185,7 +186,7 @@ router.post('/admin', function(req,res){
             stack: stack,
         };
 
-        User.create(info, function(err){
+        User.create(info, function(err, user){
             if(err){
                 console.log(err);
                 return res.badRequest("Something unexpected happened");
@@ -225,11 +226,26 @@ router.post('/admin', function(req,res){
  *             "email": "TrippleSoftICT@gmail.com",
  *             "businessType":"Tech"
  *            }
+ * 
+ * 
+ *       UserJWT:
+ *          type: object
+ *          properties:
+ *            token:
+ *              type: string
+ *              description: A short-lived token containing...
+ *              title: Token
+ *            refresh_token: 
+ *              type: string
+ *              description: A long-lived token containing ...
+ *              title: Refresh Token
+ *            user: 
+ *              $ref: "#/definitions/NewBusiness"
  */
 
 /**
  * @swagger
- * /register/business:
+ * /account/register/business:
  *   post:
  *     summary: Registers a new business
  *     description:
@@ -250,7 +266,17 @@ router.post('/admin', function(req,res){
  *            "businessType":"Tech"
  *            }
  *     responses:
- *      
+ *       201:
+ *         description: The JWT token representing user session
+ *         schema: 
+ *           $ref: "#/definitions/UserJWT"
+ *         headers:
+ *           Authorization: 
+ *             type: string
+ *             description: A JWT short-lived token...
+ *           Refresh-Token: 
+ *             type: string
+ *             description: A long-lived token ...
  *       409:
  *         description: When the email is already in use
  *     securityDefinitions:
