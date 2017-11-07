@@ -402,7 +402,7 @@ router.get('/', protector.protect,function(req,res){
 
 /**
  * @swagger
- * /profile/students/{id}:
+ * /account/profile/student/{id}:
  *   get:
  *     tags:
  *       - Students
@@ -462,7 +462,7 @@ router.get('/student/:id', protector.protect, allow('owner,admin,business,studen
 
 /**
  * @swagger
- * /profile/{id}:
+ * /account/profile/{id}:
  *   get:
  *     tags:
  *       - Users

@@ -25,9 +25,17 @@ app.use(cors());
 
 var spec = swaggerJSDoc({
   swaggerDefinition: {
-    info: {
+    info: { 
+      description: 'This API is responsible for managing the information \
+      \ about students as well as businesses and admin along with their authentication, \
+      \ authorization. It includes the basic CRUD operations for users, registration, login and password reset.',  
       title: 'Rudigo Portfolio',
-      version: '1.0.0'
+      contact: {
+        name: ' Okpara Franklin',
+        email: 'frankmaclin361@gmail.com'
+      },
+      version: '1.0.0',
+        
     },
     // host: '18.220.175.109',
     host: 'localhost:3000',
